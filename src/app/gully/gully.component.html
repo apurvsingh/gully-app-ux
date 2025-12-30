@@ -46,6 +46,9 @@
   <div *ngIf="pipeHeightInput.invalid && pipeHeightInput.touched" class="error">
     Pipe Height is required
   </div>
+  <div *ngIf="!isPipePositionValid && pipeHeightInput.touched" class="error">
+    Pipe must fit completely inside the gully
+  </div>
 
   <!-- Pipe Diameter -->
   <label>
@@ -63,6 +66,10 @@
     Pipe Diameter is required
   </div>
 
+  <div *ngIf="!isPipeDiameterValid && pipeDiameterInput.touched" class="error">
+    Pipe diameter cannot exceed gully height
+  </div>
+
   <!-- Water Height -->
   <label>
     Water Height (cm):
@@ -77,6 +84,9 @@
   </label>
   <div *ngIf="waterHeightInput.invalid && waterHeightInput.touched" class="error">
     Water Height is required
+  </div>
+  <div *ngIf="!isWaterHeightValid && waterHeightInput.touched" class="error">
+    Water height cannot exceed gully height
   </div>
 
   <!-- Name -->
@@ -97,7 +107,7 @@
   <button
     type="button"
     (click)="save()"
-    [disabled]="!gullyForm.valid"
+    [disabled]="!gullyForm.valid || !isFormLogicallyValid"
   >
     Save Gully
   </button>

@@ -18,6 +18,13 @@ export class GullyComponent {
 
   scale = 4;
 
+  // validationFlags
+  // Logical validation flags
+  isWaterHeightValid = true;
+  isPipeDiameterValid = true;
+  isPipePositionValid = true;
+  isFormLogicallyValid = true;
+
   layout!: GullyLayout;
 
   constructor(private gullyService: GullyService) {
@@ -25,6 +32,12 @@ export class GullyComponent {
   }
 
   recalculateLayout(): void {
+    this.validateInputParameters()
+
+    if (!this.isFormLogicallyValid) {
+      return;
+    }
+
     const svgHeight = this.height * this.scale;
     const svgWidth = (this.width + 30) * this.scale;
     const waterHeight = this.waterHeightCm * this.scale;
@@ -60,5 +73,21 @@ export class GullyComponent {
         console.error('Failed to save gully');
       }
     });
+  }
+
+  private validateInputParameters(): void {
+    this.isWaterHeightValid = this.waterHeightCm <= this.height;
+
+      this.isPipeDiameterValid = this.pipeDiameter <= this.height;
+
+      const halfDiameter = this.pipeDiameter / 2;
+      this.isPipePositionValid =
+        this.pipeHeight - halfDiameter >= 0 &&
+        this.pipeHeight + halfDiameter <= this.height;
+
+      this.isFormLogicallyValid =
+        this.isWaterHeightValid &&
+        this.isPipeDiameterValid &&
+        this.isPipePositionValid;
   }
 }
