@@ -14,3 +14,13 @@ export interface GullyResponse extends GullyRequest{
 export interface Error{
   errorMessage: string
 }
+
+export interface GullyLayout {
+  svgHeight: number;
+  svgWidth: number;
+  waterHeight: number;
+  pipeY: number;
+  pipeRadiusPx: number;
+  pipeTopY: number;
+  pipeBottomY: number;
+}

@@ -1,54 +1,113 @@
-<form #gullyForm="ngForm">
-  <div class="controls">
-    <label>Height (cm):
-      <input type="number" [(ngModel)]="height" name="height" required #heightInput="ngModel"/>
-    </label>
-    <div *ngIf="heightInput.invalid && heightInput.touched" class="error">
-      Height is required
-    </div>
-
-    <label>Width (cm):
-      <input type="number" [(ngModel)]="width" name="width" required #widthInput="ngModel"/>
-    </label>
-    <div *ngIf="widthInput.invalid && widthInput.touched" class="error">
-      Width is required
-    </div>
-
-    <label>Pipe Height (cm):
-      <input type="number" [(ngModel)]="pipeHeight" name="pipeHeight" required #pipeHeightInput="ngModel"/>
-    </label>
-    <div *ngIf="pipeHeightInput.invalid && pipeHeightInput.touched" class="error">
-      Pipe Height is required
-    </div>
-
-    <label>Pipe Diameter (cm):
-      <input type="number" [(ngModel)]="pipeDiameter" name="pipeDiameter" required #pipeDiameterInput="ngModel"/>
-    </label>
-    <div *ngIf="pipeDiameterInput.invalid && pipeDiameterInput.touched" class="error">
-      Pipe Diameter is required
-    </div>
-
-    <label>Water Height (cm):
-      <input type="number" [(ngModel)]="waterHeightCm" name="waterHeightCm" required #waterHeightInput="ngModel"/>
-    </label>
-    <div *ngIf="waterHeightInput.invalid && waterHeightInput.touched" class="error">
-      Water Height is required
-    </div>
-
-    <label>Name:
-      <input type="text" [(ngModel)]="gullyName" name="gullyName" required #nameInput="ngModel"/>
-    </label>
-    <div *ngIf="nameInput.invalid && nameInput.touched" class="error">
-      Name is required
-    </div>
-
-    <button (click)="save()" [disabled]="!gullyForm.valid">Save Gully</button>
+<form #gullyForm="ngForm" class="input-layout">
+  <!-- Height -->
+  <label>
+    Height (cm):
+    <input
+      type="number"
+      name="height"
+      required
+      [(ngModel)]="height"
+      (ngModelChange)="recalculateLayout()"
+      #heightInput="ngModel"
+    />
+  </label>
+  <div *ngIf="heightInput.invalid && heightInput.touched" class="error">
+    Height is required
   </div>
+
+  <!-- Width -->
+  <label>
+    Width (cm):
+    <input
+      type="number"
+      name="width"
+      required
+      [(ngModel)]="width"
+      (ngModelChange)="recalculateLayout()"
+      #widthInput="ngModel"
+    />
+  </label>
+  <div *ngIf="widthInput.invalid && widthInput.touched" class="error">
+    Width is required
+  </div>
+
+  <!-- Pipe Height -->
+  <label>
+    Pipe Height (cm):
+    <input
+      type="number"
+      name="pipeHeight"
+      required
+      [(ngModel)]="pipeHeight"
+      (ngModelChange)="recalculateLayout()"
+      #pipeHeightInput="ngModel"
+    />
+  </label>
+  <div *ngIf="pipeHeightInput.invalid && pipeHeightInput.touched" class="error">
+    Pipe Height is required
+  </div>
+
+  <!-- Pipe Diameter -->
+  <label>
+    Pipe Diameter (cm):
+    <input
+      type="number"
+      name="pipeDiameter"
+      required
+      [(ngModel)]="pipeDiameter"
+      (ngModelChange)="recalculateLayout()"
+      #pipeDiameterInput="ngModel"
+    />
+  </label>
+  <div *ngIf="pipeDiameterInput.invalid && pipeDiameterInput.touched" class="error">
+    Pipe Diameter is required
+  </div>
+
+  <!-- Water Height -->
+  <label>
+    Water Height (cm):
+    <input
+      type="number"
+      name="waterHeightCm"
+      required
+      [(ngModel)]="waterHeightCm"
+      (ngModelChange)="recalculateLayout()"
+      #waterHeightInput="ngModel"
+    />
+  </label>
+  <div *ngIf="waterHeightInput.invalid && waterHeightInput.touched" class="error">
+    Water Height is required
+  </div>
+
+  <!-- Name -->
+  <label>
+    Name:
+    <input
+      type="text"
+      name="gullyName"
+      required
+      [(ngModel)]="gullyName"
+      #nameInput="ngModel"
+    />
+  </label>
+  <div *ngIf="nameInput.invalid && nameInput.touched" class="error">
+    Name is required
+  </div>
+
+  <button
+    type="button"
+    (click)="save()"
+    [disabled]="!gullyForm.valid"
+  >
+    Save Gully
+  </button>
 </form>
 
+
 <svg
-  [attr.width]="svgWidth"
-  [attr.height]="svgHeight"
+  *ngIf="layout"
+  [attr.width]="layout.svgWidth"
+  [attr.height]="layout.svgHeight"
   class="gully-svg"
 >
   <!-- Gully body -->
@@ -56,43 +115,43 @@
     x="0"
     y="0"
     [attr.width]="width * scale"
-    [attr.height]="svgHeight"
+    [attr.height]="layout.svgHeight"
     class="gully-body"
   />
 
   <!-- Water -->
-    <rect
+  <rect
     x="0"
-    [attr.y]="svgHeight - waterHeight"
+    [attr.y]="layout.svgHeight - layout.waterHeight"
     [attr.width]="width * scale"
-    [attr.height]="waterHeight"
+    [attr.height]="layout.waterHeight"
     class="water"
-    />
+  />
 
   <!-- Pipe -->
   <rect
     [attr.x]="width * scale"
-    [attr.y]="pipeY - (pipeDiameter * scale / 2)"
+    [attr.y]="layout.pipeY - layout.pipeRadiusPx"
     [attr.width]="30 * scale"
-    [attr.height]="pipeDiameter * scale"
+    [attr.height]="layout.pipeRadiusPx * 2"
     class="pipe"
   />
 
-  <!-- Pipe wall: top (red) -->
-    <line
+  <!-- Top pipe wall (red) -->
+  <line
     x1="0"
-    [attr.y1]="pipeTopY"
+    [attr.y1]="layout.pipeTopY"
     [attr.x2]="(width + 30) * scale"
-    [attr.y2]="pipeTopY"
+    [attr.y2]="layout.pipeTopY"
     class="pipe-wall pipe-wall-top"
-    />
+  />
 
-    <!-- Pipe wall: bottom (yellow) -->
-    <line
+  <!-- Bottom pipe wall (yellow) -->
+  <line
     x1="0"
-    [attr.y1]="pipeBottomY"
+    [attr.y1]="layout.pipeBottomY"
     [attr.x2]="(width + 30) * scale"
-    [attr.y2]="pipeBottomY"
+    [attr.y2]="layout.pipeBottomY"
     class="pipe-wall pipe-wall-bottom"
-    />
+  />
 </svg>
