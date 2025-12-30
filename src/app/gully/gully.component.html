@@ -1,109 +1,122 @@
 <form #gullyForm="ngForm" class="input-layout">
+
   <!-- Height -->
-  <label>
-    Height (cm):
-    <input
-      type="number"
-      name="height"
-      required
-      [(ngModel)]="height"
-      (ngModelChange)="recalculateLayout()"
-      #heightInput="ngModel"
-    />
-  </label>
-  <div *ngIf="heightInput.invalid && heightInput.touched" class="error">
-    Height is required
+  <div class="field">
+    <label>
+      Height (cm)
+      <input
+        type="number"
+        name="height"
+        required
+        [(ngModel)]="height"
+        (ngModelChange)="recalculateLayout()"
+        #heightInput="ngModel"
+      />
+    </label>
+    <div *ngIf="heightInput.invalid && heightInput.touched" class="error">
+      Height is required
+    </div>
   </div>
 
   <!-- Width -->
-  <label>
-    Width (cm):
-    <input
-      type="number"
-      name="width"
-      required
-      [(ngModel)]="width"
-      (ngModelChange)="recalculateLayout()"
-      #widthInput="ngModel"
-    />
-  </label>
-  <div *ngIf="widthInput.invalid && widthInput.touched" class="error">
-    Width is required
+  <div class="field">
+    <label>
+      Width (cm)
+      <input
+        type="number"
+        name="width"
+        required
+        [(ngModel)]="width"
+        (ngModelChange)="recalculateLayout()"
+        #widthInput="ngModel"
+      />
+    </label>
+    <div *ngIf="widthInput.invalid && widthInput.touched" class="error">
+      Width is required
+    </div>
   </div>
 
   <!-- Pipe Height -->
-  <label>
-    Pipe Height (cm):
-    <input
-      type="number"
-      name="pipeHeight"
-      required
-      [(ngModel)]="pipeHeight"
-      (ngModelChange)="recalculateLayout()"
-      #pipeHeightInput="ngModel"
-    />
-  </label>
-  <div *ngIf="pipeHeightInput.invalid && pipeHeightInput.touched" class="error">
-    Pipe Height is required
-  </div>
-  <div *ngIf="!isPipePositionValid && pipeHeightInput.touched" class="error">
-    Pipe must fit completely inside the gully
+  <div class="field">
+    <label>
+      Pipe Height (cm)
+      <input
+        type="number"
+        name="pipeHeight"
+        required
+        [(ngModel)]="pipeHeight"
+        (ngModelChange)="recalculateLayout()"
+        #pipeHeightInput="ngModel"
+      />
+    </label>
+    <div *ngIf="pipeHeightInput.invalid && pipeHeightInput.touched" class="error">
+      Pipe height is required
+    </div>
+    <div *ngIf="!isPipePositionValid && pipeHeightInput.touched" class="error">
+      Pipe must fit completely inside the gully
+    </div>
   </div>
 
   <!-- Pipe Diameter -->
-  <label>
-    Pipe Diameter (cm):
-    <input
-      type="number"
-      name="pipeDiameter"
-      required
-      [(ngModel)]="pipeDiameter"
-      (ngModelChange)="recalculateLayout()"
-      #pipeDiameterInput="ngModel"
-    />
-  </label>
-  <div *ngIf="pipeDiameterInput.invalid && pipeDiameterInput.touched" class="error">
-    Pipe Diameter is required
-  </div>
-
-  <div *ngIf="!isPipeDiameterValid && pipeDiameterInput.touched" class="error">
-    Pipe diameter cannot exceed gully height
+  <div class="field">
+    <label>
+      Pipe Diameter (cm)
+      <input
+        type="number"
+        name="pipeDiameter"
+        required
+        [(ngModel)]="pipeDiameter"
+        (ngModelChange)="recalculateLayout()"
+        #pipeDiameterInput="ngModel"
+      />
+    </label>
+    <div *ngIf="pipeDiameterInput.invalid && pipeDiameterInput.touched" class="error">
+      Pipe diameter is required
+    </div>
+    <div *ngIf="!isPipeDiameterValid && pipeDiameterInput.touched" class="error">
+      Pipe diameter cannot exceed gully height
+    </div>
   </div>
 
   <!-- Water Height -->
-  <label>
-    Water Height (cm):
-    <input
-      type="number"
-      name="waterHeightCm"
-      required
-      [(ngModel)]="waterHeightCm"
-      (ngModelChange)="recalculateLayout()"
-      #waterHeightInput="ngModel"
-    />
-  </label>
-  <div *ngIf="waterHeightInput.invalid && waterHeightInput.touched" class="error">
-    Water Height is required
-  </div>
-  <div *ngIf="!isWaterHeightValid && waterHeightInput.touched" class="error">
-    Water height cannot exceed gully height
+  <div class="field">
+    <label>
+      Water Height (cm)
+      <input
+        type="number"
+        name="waterHeightCm"
+        required
+        [(ngModel)]="waterHeightCm"
+        (ngModelChange)="recalculateLayout()"
+        #waterHeightInput="ngModel"
+      />
+    </label>
+    <div *ngIf="waterHeightInput.invalid && waterHeightInput.touched" class="error">
+      Water height is required
+    </div>
+    <div *ngIf="!isWaterHeightValid && waterHeightInput.touched" class="error">
+      Water height cannot exceed gully height
+    </div>
   </div>
 
   <!-- Name -->
-  <label>
-    Name:
-    <input
-      type="text"
-      name="gullyName"
-      required
-      [(ngModel)]="gullyName"
-      #nameInput="ngModel"
-    />
-  </label>
-  <div *ngIf="nameInput.invalid && nameInput.touched" class="error">
-    Name is required
+  <div class="field">
+    <label>
+      Name
+      <input
+        type="text"
+        name="gullyName"
+        required
+        [(ngModel)]="gullyName"
+        #nameInput="ngModel"
+      />
+    </label>
+    <div *ngIf="nameInput.invalid && nameInput.touched" class="error">
+      Name is required
+    </div>
   </div>
 
+  <!-- Save -->
   <button
     type="button"
     (click)="save()"
@@ -111,8 +124,9 @@
   >
     Save Gully
   </button>
+
 </form>
-<br>
+
 <div *ngIf="saveSuccessMessage" class="success">
   {{ saveSuccessMessage }}
 </div>
