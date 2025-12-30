@@ -64,3 +64,9 @@ button:disabled {
   margin-top: 0.25rem;
   display: block;
 }
+
+.success {
+  margin-top: 8px;
+  color: #2e7d32;
+  font-weight: 600;
+}

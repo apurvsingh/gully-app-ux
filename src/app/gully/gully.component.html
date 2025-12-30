@@ -112,7 +112,14 @@
     Save Gully
   </button>
 </form>
+<br>
+<div *ngIf="saveSuccessMessage" class="success">
+  {{ saveSuccessMessage }}
+</div>
 
+<div *ngIf="saveFailMessage" class="error">
+  {{ saveFailMessage }}
+</div>
 
 <svg
   *ngIf="layout"

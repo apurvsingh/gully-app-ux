@@ -27,6 +27,9 @@ export class GullyComponent {
 
   layout!: GullyLayout;
 
+  saveSuccessMessage = '';
+  saveFailMessage ='';
+
   constructor(private gullyService: GullyService) {
     this.recalculateLayout();
   }
@@ -56,6 +59,9 @@ export class GullyComponent {
   }
 
   save(): void {
+    this.saveSuccessMessage = '';
+    this.saveFailMessage ='';
+
     const gully: GullyRequest = {
       name: this.gullyName,
       height: this.height,
@@ -67,9 +73,11 @@ export class GullyComponent {
 
     this.gullyService.saveGully(gully).subscribe({
       next: (response: GullyResponse) => {
+        this.saveSuccessMessage = 'Gully saved successfully';
         console.log('Gully saved successfully:', response);
       },
       error: () => {
+        this.saveFailMessage = 'Gully NOT saved';
         console.error('Failed to save gully');
       }
     });
