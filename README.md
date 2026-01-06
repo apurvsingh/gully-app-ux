@@ -3,8 +3,11 @@
 This project is a small Angular application that allows users to **configure and visualize a gully** using real-world dimensions and optionally persist the configuration to a [backend API](https://github.com/apurvsingh/GullyBackendService).
 
 NOTE: This includes unit-tests AND global error handling via http interceptor
+Used [w3Schools svg](https://www.w3schools.com/graphics/svg_intro.asp) as starting point. 
 
-What can be improved: Inputs can have a sperate logical sepration through a pipe-input-component
+What can be improved: 
+- Inputs can have a sperate logical sepration through a pipe-input-component
+- If water level rises beyond the pipe height, the pipe should fill up with volumetric calculations
 ---
 
 ## Features
