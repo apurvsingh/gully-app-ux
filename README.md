@@ -4,6 +4,7 @@ This project is a small Angular application that allows users to **configure and
 
 NOTE: This includes unit-tests AND global error handling via http interceptor
 
+What can be improved: Inputs can have a sperate logical sepration through a pipe-input-component
 ---
 
 ## Features

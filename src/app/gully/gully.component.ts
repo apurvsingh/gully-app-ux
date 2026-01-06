@@ -19,7 +19,6 @@ export class GullyComponent {
   scale = 4;
 
   // validationFlags
-  // Logical validation flags
   isWaterHeightValid = true;
   isPipeDiameterValid = true;
   isPipePositionValid = true;
@@ -42,7 +41,7 @@ export class GullyComponent {
     }
 
     const svgHeight = this.height * this.scale;
-    const svgWidth = (this.width + 30) * this.scale;
+    const svgWidth = (this.width + 30) * this.scale; // added 30 cm for the pipe to show
     const waterHeight = this.waterHeightCm * this.scale;
     const pipeY = svgHeight - (this.pipeHeight * this.scale);
     const pipeRadiusPx = (this.pipeDiameter / 2) * this.scale;
