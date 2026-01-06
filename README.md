@@ -2,7 +2,7 @@
 
 This project is a small Angular application that allows users to **configure and visualize a gully** using real-world dimensions and optionally persist the configuration to a [backend API](https://github.com/apurvsingh/GullyBackendService).
 
-NOTE: This does not include unit-tests or error handling (which can be done via http interceptor)
+NOTE: This includes unit-tests AND global error handling via http interceptor
 
 ---
 

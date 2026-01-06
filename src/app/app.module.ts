@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { provideHttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi
+} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { GullyComponent } from './gully/gully.component';
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,8 +21,13 @@ import { GullyComponent } from './gully/gully.component';
     FormsModule
   ],
   providers: [
-    provideHttpClient()
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
   ],
-  bootstrap: [AppComponent]  // Bootstraps your app
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
